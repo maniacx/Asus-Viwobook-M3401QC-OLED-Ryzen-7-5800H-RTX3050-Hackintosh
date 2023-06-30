@@ -35,7 +35,7 @@ OS: Monterey 12.XX.X / Ventura 13.XX.X
 * Internal NVMe drive (Untested. It detects, but I haven't installed macos on my internal nvme drive as it contains Bitlockered Windows. I installed macos,on a portable UsbC SSD)
 
 ## Not working/Untested:
-* OLED Display Brightness: -Not working, changin brigtness have no effect on Actual Panel Brightness
+* OLED Display Brightness: -Not working, (you can use Lunar App and use software dimming as a workaround, See Below)
 * ATKD keys: FN+F9 (Disable Mic), FN+F10(Disable Camera), FN+F11(Screenshot) -Not Working
 * ATKD Keys: FN+12 -Suppose to change Battery Threshold but untested.
 * ATKD Keys: FN+F4(Brightnes+), FN+F5(Brightness-) -Keys are working can control the brightness slider, but OLED brightness control itself is broken
@@ -69,51 +69,20 @@ OS: Monterey 12.XX.X / Ventura 13.XX.X
 * There are other ways to increase the VRAM, (I have used it already to increase my VRAM to 2GB) but I do not want to post it, as it can brick the laptop making the whole device unusable/unrepairable.
 * Also even with 2GB VRAM, i still do get random freeze on occasion but not as often as 500MB, so increase VRAM but hacking it is not worth the risk.
 
+## OLED Brightness Workaround
+* You can download Lunar app https://github.com/alin23/Lunar/releases
+* Enable Software dimming.
+* You can control brightness using Lunar brightness control slider, System Panels brightness slider, and Fn+F4/F5
+* Free mode allows you change brightness 100 steps a day, or else you can buy the app.
+
+![Lunar](https://github.com/maniacx/Asus-Viwobook-M3401QC-OLED-Ryzen-7-5800H-RTX3050-Hackintosh/blob/main/.github/Lunar.png)
+
 ## Credits
 * Everyone Hackintosh world for this amazing project
 * NootedInc: For Ryzen iGPU support https://github.com/NootInc/NootedRed
 * Kingtous: Referred to this project get things started. https://github.com/Kingtous/thinkbook14p-Gen2-ACH-hackintosh
 * shiecldk: Referred to this project for to fix ATKD https://github.com/shiecldk/ASUS-ZenBook-Pro-Duo-15-OLED-UX582-Hackintosh
-* Qonfused: Referred to this project for to fix ATKDhttps://github.com/Qonfused/ASUS-ZenBook-Duo-14-UX481-Hackintosh
+* Qonfused: Referred to this project for to fix ATKD https://github.com/Qonfused/ASUS-ZenBook-Duo-14-UX481-Hackintosh
 * PIut02: Referred to this project for to fix https://github.com/PIut02/ROG-Zephyrus-G14-GA401-Hackintosh
-
-
-
- 
- 
-   
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+* ExtremeXT
+* Peyton
