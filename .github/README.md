@@ -1,6 +1,6 @@
 OpenCore Asus Viwobook M3401
 =================================================
-![Hackintosh Monterey](https://github.com/maniacx/Asus-Viwobook-M3401QC-OLED-Ryzen-7-5800H-RTX3050-Hackintosh/blob/main/.github/Monterey.png)
+![Hackintosh Monterey](https://github.com/maniacx/Asus-Viwobook-M3401QC-OLED-Ryzen-7-5800H-RTX3050-Hackintosh/blob/main/.github/Ventura.png)
 OS: Monterey 12.XX.X / Ventura 13.XX.X
 
 ## Hardware:
