@@ -30,7 +30,7 @@ OS: Monterey 12.XX.X / Ventura 13.XX.X
 * Bluetooth (Tested only bluetooth earbuds)
 * Web Camera
 * SD Card Reader
-* Battery Indicator (Not accurate, show 8% Higher than normal)
+* Battery Indicator (Not accurate, show 5-8% Higher than normal)
 * ATKD keys: FN+ESC, FN+F1(volume mute) FN+F2(Volume+), FN+F3(Volume-), FN+F6(Disable Touchpad), FN+F7(Keyboard Backlight)
 * Internal NVMe drive (Untested. It detects, but I haven't installed macos on my internal nvme drive as it contains Bitlockered Windows. I installed macos,on a portable UsbC SSD)
 
@@ -42,7 +42,7 @@ OS: Monterey 12.XX.X / Ventura 13.XX.X
 * Sleep/Hibernation -Not working
 * DRM -Not working
 * Laptop mic -Not working
-* Headphone Jack -Not tested: Dont have wired headphones.  If headphone jack is not working for you, try changing **alcid=12** (Line2098) and **layout-id** (Line 535) config.plist. Available options are 11, 12, 13, 15, 21, 22, 28, 44, 66, 99 for ALC294. Reference. https://github.com/acidanthera/AppleALC/wiki/Supported-codecs
+* Headphone Jack -Not tested: Dont have wired headphones.  If headphone jack is not working for you, try changing **alcid=12** ([Line 2189](https://github.com/maniacx/Asus-Viwobook-M3401QC-OLED-Ryzen-7-5800H-RTX3050-Hackintosh/blob/61c6ff926079f8ced435e04026486f40a4f9d42a/EFI/OC/config.plist#L2189)) and **layout-id** ([Line 606](https://github.com/maniacx/Asus-Viwobook-M3401QC-OLED-Ryzen-7-5800H-RTX3050-Hackintosh/blob/61c6ff926079f8ced435e04026486f40a4f9d42a/EFI/OC/config.plist#L606))  config.plist. Available options are 11, 12, 13, 15, 21, 22, 28, 44, 66, 99 for ALC294. Reference. https://github.com/acidanthera/AppleALC/wiki/Supported-codecs
 * HDMI port -Not tested: Dont have HDMI device
 * GPU 3D acceleration -Untested
 * Apple/other apps -Haven't created an appleid, so cannot test any apps other than system defaults
@@ -52,30 +52,36 @@ OS: Monterey 12.XX.X / Ventura 13.XX.X
 * Full detail guide available here https://dortania.github.io/OpenCore-Install-Guide/
 * Video just to get an brief idea of installation https://youtu.be/eUnVzJsINCI
 * Use this EFI as reference only
-* Build you own SSDT modules, and config.plist and generate
+* Build you own SSDT modules, and config.plist.
 * Generate Your own SMBIOS, using GenSMBIOS tool, use **MacBookPro16,3**
 * With nooteRed enabled, Installation takes longer as iGPU stalls during installation.
-* Recommended (but not neccessary) to disable nootedRED kext by setting kext flag to **false** (Line 598) in config.list. Note doing this will make UI extremely slow and laggy, just have patience and go through it and renable NootedRed by setting kext flag to **true** after installation and macos setup is completed.
-* OR keep nootedRed enabled, but at one point it will seem it will take 20 minutes longer and seem like installation is frozen, hung but it does continue and complete in the end.
-* If your display start **flickering**, Go to **Settings>Display** and Disable **High Dyanmic Range**
+* Recommended to disable nootedRED kext by changing kext flag from **true** to **false** ([Line 669](https://github.com/maniacx/Asus-Viwobook-M3401QC-OLED-Ryzen-7-5800H-RTX3050-Hackintosh/blob/61c6ff926079f8ced435e04026486f40a4f9d42a/EFI/OC/config.plist#L669))  in config.list. Note doing this will make UI extremely slow and laggy, just have patience and go through it and renable NootedRed by setting kext flag to **true** after installation and macos setup is completed.
+* It will still boot with nootedRed enabled, but at one point it will seem it will take 20 minutes longer and seem like installation is frozen, hung but it does continue and complete in the end.
+* If your display start **flickering**, Go to **Settings>Display** and Disable **High Dyanmic Range**. (Another reason to disable nootedRed during installation because if you OLED panel starts to flicker, you cannot go to Display Settings, until you complete the whole MacOS initial setup which is setting of Language/Account/AppleID/Keyboard/Accesibily/Timezone etc etc and you will have to go to all this process with screen flicker.)
+* Also recommended to disable USBMap during installation by changing kext flag from **true** to **false** ([Line 939](https://github.com/maniacx/Asus-Viwobook-M3401QC-OLED-Ryzen-7-5800H-RTX3050-Hackintosh/blob/61c6ff926079f8ced435e04026486f40a4f9d42a/EFI/OC/config.plist#L939)) 
 * If any bluetooth/camera/sdcard reader doesnt work, Remove USBMap.kext and Create a new USBMap.kext for your device. Reference https://dortania.github.io/OpenCore-Post-Install/usb/intel-mapping/intel.html
 
 ## Pre-installation/Post Installation/Random freeze issue
-* Recomment
+* Recommend
 * Integrated GPU has only VRAM, 500MB and NootedRed which support Zen iGpus recommend VRAM of minimum 1GB.
 * So you might encounter random freeze for 5-10 seconds and then continue working normal.
 * This is also the reason, it is recommended to disable the GPU driver (nootedRed) during installation as the installation stalls due to iGPU.
 * To solve this issue increase you VRAM. Check if your BIOS have a way to increase VRAM
-* There are other ways to increase the VRAM, (I have used it already to increase my VRAM to 2GB) but I do not want to post it, as it can brick the laptop making the whole device unusable/unrepairable.
-* Also even with 2GB VRAM, i still do get random freeze on occasion but not as often as 500MB, so increase VRAM but hacking it is not worth the risk.
+* If your laptop do not have option to increase VRAM, there are other ways to increase the VRAM, (I have used it already to increase my VRAM to 2GB) but I do not want to post it, as it can brick the laptop making the whole device unusable/unrepairable.
 
 ## OLED Brightness Workaround
 * You can download Lunar app https://github.com/alin23/Lunar/releases
 * Enable Software dimming.
-* You can control brightness using Lunar brightness control slider, System Panels brightness slider, and Fn+F4/F5
+* You can control brightness using Lunar brightness control slider
 * Free mode allows you change brightness 100 steps a day, or else you can buy the app.
-
 ![Lunar](https://github.com/maniacx/Asus-Viwobook-M3401QC-OLED-Ryzen-7-5800H-RTX3050-Hackintosh/blob/main/.github/Lunar.png)
+
+## Tips/Learn from my mistakes
+* In bootmenu hit spacebar to get more hidden option.
+* In Recovery mode, Don't wipe your Harddrive until you have connected to wifi and internet is accessible. You can test internet in using Safari (3 option above Disk Utility) to check for Internet access. Without internet access you wont be able to install MacOS so pointless wiping drive first.
+* Disk Label of USB and Harddrive will show on the bootmenu. And once set cannot be changed, and only option is to reinstall everything if you want to change the name in the boot menu entry. The Harddrive label will be asked when you erase the harddrive in recovery to install MacOS.
+* Disable nootedRED and USBMap during installation/upgrades.
+
 
 ## Credits
 * Everyone Hackintosh world for this amazing project
