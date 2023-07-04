@@ -31,13 +31,13 @@ OS: Monterey 12.XX.X / Ventura 13.XX.X
 * Web Camera
 * SD Card Reader
 * Battery Indicator (Not accurate, show 5-8% Higher than normal)
-* ATKD keys: FN+ESC, FN+F1(volume mute) FN+F2(Volume+), FN+F3(Volume-), FN+F6(Disable Touchpad), FN+F7(Keyboard Backlight)
+* ATKD keys: FN+ESC, FN+F1(volume mute) FN+F2(Volume+), FN+F3(Volume-), FN+F6(Disable Touchpad), FN+F7(Keyboard Backlight), FN+F12(Enable/Disable Charging threshold 80%)
 * Internal NVMe drive (Untested. It detects, but I haven't installed macos on my internal nvme drive as it contains Bitlockered Windows. I installed macos,on a portable UsbC SSD)
+* Charging threshold: Doesn't charge battery above 80%. Can be Enabled/Disabled in Setting or by FN+F12
 
 ## Not working/Untested:
 * OLED Display Brightness: -Not working, (you can use Lunar App and use software dimming as a workaround, See Below)
 * ATKD keys: FN+F9 (Disable Mic), FN+F10(Disable Camera), FN+F11(Screenshot) -Not Working
-* ATKD Keys: FN+12 -Suppose to change Battery Threshold but untested.
 * ATKD Keys: FN+F4(Brightnes+), FN+F5(Brightness-) -Keys are working can control the brightness slider, but OLED brightness control itself is broken
 * Sleep/Hibernation -Not working
 * DRM -Not working
