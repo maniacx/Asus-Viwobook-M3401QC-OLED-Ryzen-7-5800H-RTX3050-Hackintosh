@@ -48,26 +48,17 @@ OS: Monterey 12.XX.X / Ventura 13.XX.X
 * Apple/other apps -Haven't created an appleid, so cannot test any apps other than system defaults
 * Everything else untested assumed not working.
 
-## Installation
+## Installation Guide
 * Full detail guide available here https://dortania.github.io/OpenCore-Install-Guide/
 * Video just to get an brief idea of installation https://youtu.be/eUnVzJsINCI
+* Ryzen specific https://dortania.github.io/OpenCore-Install-Guide/AMD/zen.html#starting-point
+* Vega iGPU specific NootedRed https://github.com/NootInc/NootedRed (To download kext sign-in github and Action>CI> choose latest commit. Download Artifact.zip which contains nootedRed.kext)
+
+## Notes
 * Use this EFI as reference only
 * Build you own SSDT modules, and config.plist.
 * Generate Your own SMBIOS, using GenSMBIOS tool, use **MacBookPro16,3**
-* With nooteRed enabled, Installation takes longer as iGPU stalls during installation.
-* Recommended to disable nootedRED kext by changing kext flag from **true** to **false** ([Line 669](https://github.com/maniacx/Asus-Viwobook-M3401QC-OLED-Ryzen-7-5800H-RTX3050-Hackintosh/blob/61c6ff926079f8ced435e04026486f40a4f9d42a/EFI/OC/config.plist#L669))  in config.list. Note doing this will make UI extremely slow and laggy, just have patience and go through it and renable NootedRed by setting kext flag to **true** after installation and macos setup is completed.
-* It will still boot with nootedRed enabled, but at one point it will seem it will take 20 minutes longer and seem like installation is frozen, hung but it does continue and complete in the end.
-* If your display start **flickering**, Go to **Settings>Display** and Disable **High Dyanmic Range**. (Another reason to disable nootedRed during installation because if you OLED panel starts to flicker, you cannot go to Display Settings, until you complete the whole MacOS initial setup which is setting of Language/Account/AppleID/Keyboard/Accesibily/Timezone etc etc and you will have to go to all this process with screen flicker.)
-* Also recommended to disable USBMap during installation by changing kext flag from **true** to **false** ([Line 939](https://github.com/maniacx/Asus-Viwobook-M3401QC-OLED-Ryzen-7-5800H-RTX3050-Hackintosh/blob/61c6ff926079f8ced435e04026486f40a4f9d42a/EFI/OC/config.plist#L939)) 
-* If any bluetooth/camera/sdcard reader doesnt work, Remove USBMap.kext and Create a new USBMap.kext for your device. Reference https://dortania.github.io/OpenCore-Post-Install/usb/intel-mapping/intel.html
-
-## Pre-installation/Post Installation/Random freeze issue
-* Recommend
-* Integrated GPU has only VRAM, 500MB and NootedRed which support Zen iGpus recommend VRAM of minimum 1GB.
-* So you might encounter random freeze for 5-10 seconds and then continue working normal.
-* This is also the reason, it is recommended to disable the GPU driver (nootedRed) during installation as the installation stalls due to iGPU.
-* To solve this issue increase you VRAM. Check if your BIOS have a way to increase VRAM
-* If your laptop do not have option to increase VRAM, there are other ways to increase the VRAM, (I have used it already to increase my VRAM to 2GB) but I do not want to post it, as it can brick the laptop making the whole device unusable/unrepairable.
+* If your display start **flickering**, Go to **Settings>Display** and Disable **High Dynamic Range**. (Another reason to disable nootedRed during installation because if you OLED panel starts to flicker, you cannot go to Display Settings, until you complete the whole MacOS initial setup which is setting of Language/Account/AppleID/Keyboard/Accesibily/Timezone etc etc and you will have to go to all this process with screen flicker.)
 
 ## OLED Brightness Workaround
 * You can download Lunar app https://github.com/alin23/Lunar/releases
@@ -77,11 +68,10 @@ OS: Monterey 12.XX.X / Ventura 13.XX.X
 ![Lunar](https://github.com/maniacx/Asus-Viwobook-M3401QC-OLED-Ryzen-7-5800H-RTX3050-Hackintosh/blob/main/.github/Lunar.png)
 
 ## Tips/Learn from my mistakes
+* KEXT. Do not download and add sources from github in kext folder. They are mostly available in releases section on the leftside on github. All kext should be ending with **.kext**
 * In bootmenu hit spacebar to get more hidden option.
 * In Recovery mode, Don't wipe your Harddrive until you have connected to wifi and internet is accessible. You can test internet in using Safari (3 option above Disk Utility) to check for Internet access. Without internet access you wont be able to install MacOS so pointless wiping drive first.
 * Disk Label of USB and Harddrive will show on the bootmenu. And once set cannot be changed, and only option is to reinstall everything if you want to change the name in the boot menu entry. The Harddrive label will be asked when you erase the harddrive in recovery to install MacOS.
-* Disable nootedRED and USBMap during installation/upgrades.
-
 
 ## Credits
 * Everyone Hackintosh world for this amazing project
