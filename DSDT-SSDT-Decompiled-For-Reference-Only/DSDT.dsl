@@ -5,18 +5,18 @@
  * 
  * Disassembling to symbolic ASL+ operators
  *
- * Disassembly of DSDT.aml, Thu Jun 29 19:31:00 2023
+ * Disassembly of DSDT.aml, Mon Jul 24 19:50:09 2023
  *
  * Original Table Header:
  *     Signature        "DSDT"
- *     Length           0x0000D905 (55557)
+ *     Length           0x0000DA0E (55822)
  *     Revision         0x02
- *     Checksum         0x99
+ *     Checksum         0x6D
  *     OEM ID           "_ASUS_"
  *     OEM Table ID     "Notebook"
  *     OEM Revision     0x01072009 (17244169)
  *     Compiler ID      "INTL"
- *     Compiler Version 0x20190509 (538510601)
+ *     Compiler Version 0x20200717 (538969879)
  */
 DefinitionBlock ("", "DSDT", 2, "_ASUS_", "Notebook", 0x01072009)
 {
@@ -127,13 +127,13 @@ DefinitionBlock ("", "DSDT", 2, "_ASUS_", "Notebook", 0x01072009)
     Name (TTPF, Zero)
     Name (DTPT, Zero)
     Name (TTDP, One)
-    Name (TPMB, 0xBC71C000)
+    Name (TPMB, 0xBC721000)
     Name (TPBS, 0x4000)
-    Name (TPMC, 0xBC720000)
+    Name (TPMC, 0xBC725000)
     Name (TPCS, 0x4000)
     Name (TPMM, 0xFD210510)
     Name (FTPM, 0xFD210510)
-    Name (PPIM, 0xBC955918)
+    Name (PPIM, 0xBC947918)
     Name (PPIL, 0x1C)
     Name (AMDT, One)
     Name (TPMF, One)
@@ -397,7 +397,7 @@ DefinitionBlock ("", "DSDT", 2, "_ASUS_", "Notebook", 0x01072009)
     Name (TOPM, 0x00000000)
     Name (ROMS, 0xFFE00000)
     Name (VGAF, One)
-    OperationRegion (GNVS, SystemMemory, 0xBC955C18, 0x0C)
+    OperationRegion (GNVS, SystemMemory, 0xBC947C18, 0x0E)
     Field (GNVS, AnyAcc, Lock, Preserve)
     {
         CNSB,   8, 
@@ -408,10 +408,12 @@ DefinitionBlock ("", "DSDT", 2, "_ASUS_", "Notebook", 0x01072009)
         MWTT,   8, 
         DPTC,   8, 
         WOVS,   8, 
+        WCRS,   8, 
         THPN,   8, 
         THPD,   8, 
         RV2I,   8, 
-        ISDS,   8
+        ISDS,   8, 
+        EWAN,   8
     }
 
     OperationRegion (DEB2, SystemIO, 0x80, 0x04)
@@ -1569,8 +1571,8 @@ DefinitionBlock ("", "DSDT", 2, "_ASUS_", "Notebook", 0x01072009)
             Name (MBB, 0xC0000000)
             Name (MBL, 0x3D000000)
             Name (MAB, 0x0000000440000000)
-            Name (MAL, 0x000000FBC0000000)
-            Name (MAM, 0x000000FFFFFFFFFF)
+            Name (MAL, 0x0000007BC0000000)
+            Name (MAM, 0x0000007FFFFFFFFF)
             Name (CRS1, ResourceTemplate ()
             {
                 WordBusNumber (ResourceProducer, MinFixed, MaxFixed, PosDecode,
@@ -2016,7 +2018,7 @@ DefinitionBlock ("", "DSDT", 2, "_ASUS_", "Notebook", 0x01072009)
             Device (GPP2)
             {
                 Name (_ADR, 0x00010003)  // _ADR: Address
-                Method (RHRW, 0, NotSerialized)
+                Method (_PRW, 0, NotSerialized)  // _PRW: Power Resources for Wake
                 {
                     Return (GPRW (0x0D, 0x04))
                 }
@@ -2359,11 +2361,99 @@ DefinitionBlock ("", "DSDT", 2, "_ASUS_", "Notebook", 0x01072009)
                 Device (SATA)
                 {
                     Name (_ADR, Zero)  // _ADR: Address
+                    PowerResource (P0SA, 0x00, 0x0000)
+                    {
+                        Name (D0SA, One)
+                        Method (_STA, 0, NotSerialized)  // _STA: Status
+                        {
+                            Return (D0SA) /* \_SB_.PCI0.GP18.SATA.P0SA.D0SA */
+                        }
+
+                        Method (_ON, 0, NotSerialized)  // _ON_: Power On
+                        {
+                            D0SA = One
+                        }
+
+                        Method (_OFF, 0, NotSerialized)  // _OFF: Power Off
+                        {
+                            D0SA = Zero
+                        }
+                    }
+
+                    Name (_S0W, 0x04)  // _S0W: S0 Device Wake State
+                    Name (_PR0, Package (0x01)  // _PR0: Power Resources for D0
+                    {
+                        P0SA
+                    })
+                    Name (_PR2, Package (0x01)  // _PR2: Power Resources for D2
+                    {
+                        P0SA
+                    })
+                    Name (_PR3, Package (0x01)  // _PR3: Power Resources for D3hot
+                    {
+                        P0SA
+                    })
+                    Name (_DSD, Package (0x02)  // _DSD: Device-Specific Data
+                    {
+                        ToUUID ("5025030f-842f-4ab4-a561-99a5189762d0"), 
+                        Package (0x01)
+                        {
+                            Package (0x02)
+                            {
+                                "StorageD3Enable", 
+                                One
+                            }
+                        }
+                    })
                 }
 
                 Device (SAT1)
                 {
                     Name (_ADR, One)  // _ADR: Address
+                    PowerResource (P0SA, 0x00, 0x0000)
+                    {
+                        Name (D0SA, One)
+                        Method (_STA, 0, NotSerialized)  // _STA: Status
+                        {
+                            Return (D0SA) /* \_SB_.PCI0.GP18.SAT1.P0SA.D0SA */
+                        }
+
+                        Method (_ON, 0, NotSerialized)  // _ON_: Power On
+                        {
+                            D0SA = One
+                        }
+
+                        Method (_OFF, 0, NotSerialized)  // _OFF: Power Off
+                        {
+                            D0SA = Zero
+                        }
+                    }
+
+                    Name (_S0W, 0x04)  // _S0W: S0 Device Wake State
+                    Name (_PR0, Package (0x01)  // _PR0: Power Resources for D0
+                    {
+                        P0SA
+                    })
+                    Name (_PR2, Package (0x01)  // _PR2: Power Resources for D2
+                    {
+                        P0SA
+                    })
+                    Name (_PR3, Package (0x01)  // _PR3: Power Resources for D3hot
+                    {
+                        P0SA
+                    })
+                    Name (_DSD, Package (0x02)  // _DSD: Device-Specific Data
+                    {
+                        ToUUID ("5025030f-842f-4ab4-a561-99a5189762d0"), 
+                        Package (0x01)
+                        {
+                            Package (0x02)
+                            {
+                                "StorageD3Enable", 
+                                One
+                            }
+                        }
+                    })
                 }
             }
 
@@ -2390,23 +2480,23 @@ DefinitionBlock ("", "DSDT", 2, "_ASUS_", "Notebook", 0x01072009)
                     Return (PD3A) /* \_SB_.PD3A */
                 }
 
-                Device (D022)
+                Device (D023)
                 {
                     Name (_ADR, Zero)  // _ADR: Address
                 }
 
-                Device (D023)
+                Device (D024)
                 {
                     Name (_ADR, One)  // _ADR: Address
                 }
 
-                Device (D024)
+                Device (D025)
                 {
                     Name (_ADR, 0x02)  // _ADR: Address
                 }
             }
 
-            Device (D01C)
+            Device (D01D)
             {
                 Name (_ADR, 0x00140000)  // _ADR: Address
             }
@@ -2856,7 +2946,7 @@ DefinitionBlock ("", "DSDT", 2, "_ASUS_", "Notebook", 0x01072009)
                 }
             }
 
-            Device (D01F)
+            Device (D020)
             {
                 Name (_ADR, 0x00140006)  // _ADR: Address
             }
@@ -5644,7 +5734,7 @@ DefinitionBlock ("", "DSDT", 2, "_ASUS_", "Notebook", 0x01072009)
 
     Scope (_SB)
     {
-        OperationRegion (RAMW, SystemMemory, 0xBC943000, 0x0100)
+        OperationRegion (RAMW, SystemMemory, 0xBC948000, 0x0100)
         Field (RAMW, AnyAcc, NoLock, Preserve)
         {
             AMLS,   32, 
@@ -12988,70 +13078,6 @@ DefinitionBlock ("", "DSDT", 2, "_ASUS_", "Notebook", 0x01072009)
         }
     }
 
-    Mutex (BTMT, 0x00)
-    If (CondRefOf (\_SB.PCI0.GP17.XHC1.RHUB.PRT2))
-    {
-        Scope (_SB.PCI0.GP17.XHC1.RHUB.PRT2)
-        {
-            PowerResource (BTPR, 0x05, 0x0000)
-            {
-                Method (_STA, 0, NotSerialized)  // _STA: Status
-                {
-                    If ((GGOV (0x03) == One))
-                    {
-                        Return (One)
-                    }
-                    Else
-                    {
-                        Return (Zero)
-                    }
-                }
-
-                Method (_ON, 0, NotSerialized)  // _ON_: Power On
-                {
-                }
-
-                Method (_OFF, 0, NotSerialized)  // _OFF: Power Off
-                {
-                }
-
-                Method (_RST, 0, NotSerialized)  // _RST: Device Reset
-                {
-                    Local0 = Acquire (BTMT, 0x03E8)
-                    If ((Local0 == Zero))
-                    {
-                        SGOV (0x03, Zero)
-                        Sleep (0xC8)
-                        SGOV (0x03, One)
-                        Sleep (0x01F4)
-                    }
-
-                    Release (BTMT)
-                }
-            }
-
-            Method (_PRR, 0, NotSerialized)  // _PRR: Power Resource for Reset
-            {
-                Return (Package (0x01)
-                {
-                    BTPR
-                })
-            }
-        }
-    }
-
-    Method (TPST, 1, Serialized)
-    {
-        Local0 = (Arg0 + 0xB0000000)
-        OperationRegion (VARM, SystemIO, 0x80, 0x04)
-        Field (VARM, DWordAcc, NoLock, Preserve)
-        {
-            VARR,   32
-        }
-
-        VARR = Local0
-    }
-
     Scope (_SB.PCI0)
     {
         Scope (GPP4)
@@ -13109,6 +13135,58 @@ DefinitionBlock ("", "DSDT", 2, "_ASUS_", "Notebook", 0x01072009)
         Method (_WOV, 0, NotSerialized)
         {
             Return (WOVS) /* \WOVS */
+        }
+    }
+
+    Mutex (BTMT, 0x00)
+    If (CondRefOf (\_SB.PCI0.GP17.XHC1.RHUB.PRT2))
+    {
+        Scope (_SB.PCI0.GP17.XHC1.RHUB.PRT2)
+        {
+            PowerResource (BTPR, 0x05, 0x0000)
+            {
+                Method (_STA, 0, NotSerialized)  // _STA: Status
+                {
+                    If ((GGOV (0x03) == One))
+                    {
+                        Return (One)
+                    }
+                    Else
+                    {
+                        Return (Zero)
+                    }
+                }
+
+                Method (_ON, 0, NotSerialized)  // _ON_: Power On
+                {
+                }
+
+                Method (_OFF, 0, NotSerialized)  // _OFF: Power Off
+                {
+                }
+
+                Method (_RST, 0, NotSerialized)  // _RST: Device Reset
+                {
+                    Local0 = Acquire (BTMT, 0x03E8)
+                    If ((Local0 == Zero))
+                    {
+                        SGOV (0x03, Zero)
+                        Sleep (0xC8)
+                        SGOV (0x03, One)
+                        Sleep (0x01F4)
+                    }
+
+                    Release (BTMT)
+                }
+            }
+
+            Method (_PRR, 0, NotSerialized)  // _PRR: Power Resource for Reset
+            {
+                Return (Package (0x01)
+                {
+                    BTPR
+                })
+            }
         }
     }
 }
