@@ -2134,6 +2134,10 @@
 				<integer>0</integer>
 				<key>SystemAudioVolume</key>
 				<data>Rg==</data>
+				<key>bluetoothExternalDongleFailed</key>
+				<data>AA==</data>
+				<key>bluetoothInternalControllerInfo</key>
+				<data>AAAAAAAAAAAAAAAAAAA=</data>
 				<key>boot-args</key>
 				<string>-v keepsyms=1 debug=0x100 -vi2c-force-polling -ecebeta alcid=12 -wegnoegpu</string>
 				<key>csr-active-config</key>
